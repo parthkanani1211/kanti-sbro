@@ -37,9 +37,10 @@ export const InteractiveBottle = ({
     : "/lovable-uploads/rbootle-removebg-preview.png"; // Path for LARGE bottle
 
   // Responsive sizing with different breakpoints
-  const containerSize = isSmall
-    ? "w-24 h-32 sm:w-32 sm:h-44 md:w-40 md:h-52 lg:w-48 lg:h-64"
-    : "w-32 h-44 sm:w-48 sm:h-64 md:w-64 md:h-80 lg:w-80 lg:h-96";
+const containerSize = isSmall
+  ? "w-32 h-44 sm:w-40 sm:h-56 md:w-48 md:h-64 lg:w-56 lg:h-72"
+  : "w-44 h-60 sm:w-56 sm:h-80 md:w-64 md:h-[22rem] lg:w-[22rem] lg:h-[26rem]";
+
 
   const bottleSize = isSmall
     ? "w-12 h-24 sm:w-16 sm:h-32 md:w-20 md:h-40 lg:w-20 lg:h-48"
@@ -65,8 +66,22 @@ export const InteractiveBottle = ({
     ? "top-4 sm:top-6 md:top-7 lg:top-8"
     : "top-6 sm:top-10 md:top-12 lg:top-16";
 
+  // Displayed volume label based on prop
+const volumeLabel =
+  volume === "10ml" ? (
+    <div className="leading-snug">
+      <div>0.2 gm Rh / 10 ml Pack</div>
+      <div className="text-yellow-500 font-semibold">First in Industry</div>
+    </div>
+  ) : volume === "100ml" ? (
+    "2 gm Rh / 100 ml Pack"
+  ) : (
+    volume
+  );
+
+
   return (
-    <div className="relative">
+    <div className="relative flex flex-col items-center">
       <motion.div
         className={`${containerSize} relative cursor-pointer`}
         onMouseMove={handleMouseMove}
@@ -124,6 +139,7 @@ export const InteractiveBottle = ({
 
             {/* Bottle Shape */}
             <div className="relative z-10 w-full h-full flex items-center justify-center">
+              
               <motion.div
                 // className={`${bottleSize} relative overflow-hidden shadow-xl sm:shadow-2xl`}
                 whileHover={{
@@ -146,41 +162,14 @@ export const InteractiveBottle = ({
                   whileHover={{ scale: 1.02, y: -2 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <div className={`${labelPadding} text-center`}>
-                    <motion.h3 
-                      className={`font-playfair ${titleSize} font-bold text-gray-900 mb-0.5 sm:mb-1`}
-                      animate={{ color: isHovered ? "#D4AF37" : "#1F2937" }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      RHOLUX
-                    </motion.h3>
-                    <p className={`${contentSize} text-gray-700 mb-0.5 sm:mb-1 md:mb-2`}>108</p>
-                    <div className={`${contentSize} text-gray-600 leading-tight`}>
-                      <p className="leading-tight">Rhodium Plating</p>
-                      <p className="leading-tight">Solution</p>
-                      <motion.p 
-                        className={`mt-0.5 sm:mt-1 md:mt-2 text-yellow-600 font-semibold ${contentSize}`}
-                        animate={{ scale: isHovered ? 1.1 : 1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                      >
-                        2g Rh/{volume}
-                      </motion.p>
-                    </div>
-                  </div>
+                  ... (optional label here)
                 </motion.div> */}
 
                 {/* Animated Liquid */}
                 {/* <motion.div
                   className="absolute bottom-0 left-1 right-1 sm:left-2 sm:right-2 bg-gradient-to-t from-yellow-500/30 to-yellow-300/20 rounded-b-lg"
-                  style={{ height: "60%" }}
-                  animate={{
-                    height: isHovered ? "65%" : "60%",
-                    background: isHovered 
-                      ? "linear-gradient(to top, rgba(245, 158, 11, 0.4), rgba(252, 211, 77, 0.3))"
-                      : "linear-gradient(to top, rgba(245, 158, 11, 0.3), rgba(252, 211, 77, 0.2))"
-                  }}
-                  transition={{ duration: 0.4 }}
-                /> */}
+                  ... */}
+                {/* /> */}
 
                 {/* Enhanced Reflection */}
                 <motion.div
@@ -195,14 +184,19 @@ export const InteractiveBottle = ({
       </motion.div>
 
       {/* Volume Label */}
-      {/* <motion.div
-        className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.3 }}
-      >
-        <p className="text-yellow-400 text-xs sm:text-sm font-medium">{volume}</p>
-      </motion.div> */}
+      {/* Volume Label (Always visible below bottle) */}
+<motion.div
+  className="mt-6 text-center"
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5, duration: 0.3 }}
+>
+  <p className="text-yellow-400 text-xs sm:text-sm font-medium">
+    {volumeLabel}
+  </p>
+</motion.div>
+
+
     </div>
   );
 };
